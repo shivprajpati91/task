@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../Order_Preview/Order_Preview.dart';
+ // Import the PreviewOrderScreen
 
 class FileDetail extends StatefulWidget {
   const FileDetail({super.key});
@@ -83,10 +85,7 @@ class _FileDetailState extends State<FileDetail> {
                       },
                       isExpanded: true,
                       items: availableDishes.map<DropdownMenuItem<String>>((String dish) {
-                        return DropdownMenuItem<String>(
-                          value: dish,
-                          child: Text(dish),
-                        );
+                        return DropdownMenuItem<String>(value: dish, child: Text(dish));
                       }).toList(),
                     ),
                   ),
@@ -163,17 +162,41 @@ class _FileDetailState extends State<FileDetail> {
               width: MediaQuery.sizeOf(context).width,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 5)]),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 5)],
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Price Per Plate:                             ₹$pricePerPlate",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Price Per Plate:                              ₹$pricePerPlate",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 0), // Spacing between price and discounts
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "₹299 off",
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.red),
+                      ),
+                      SizedBox(width: 15), // Spacing between the discounts
+                      Text(
+                        "20% off",
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.green),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
+
             const SizedBox(height: 20),
 
             // Fourth Section: Total Guests Input
@@ -235,8 +258,7 @@ class _FileDetailState extends State<FileDetail> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow:
-              [BoxShadow(color: Colors.grey.shade300, blurRadius: 5)]),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 5)]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -245,6 +267,7 @@ class _FileDetailState extends State<FileDetail> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   Slider(
+                    thumbColor: Colors.purple,
                     value: sliderValue,
                     min: 10,
                     max: 1500,
@@ -262,42 +285,49 @@ class _FileDetailState extends State<FileDetail> {
             const SizedBox(height: 0),
 
             // Submit Button
+            // Submit Button (Order Preview)
             Container(
               color: Colors.white,
               width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height*0.04,
+              height: MediaQuery.sizeOf(context).height * 0.04,
               child: ElevatedButton(
                 onPressed: () {
-                  // Implement form submission logic
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text("Order Details"),
-                      content: Text("Details Submitted!"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text("Close"),
-                        ),
-                      ],
-                    ),
-                  );
+                  // Navigate to PreviewOrderScreen and pass data
+
                 },
                 child: Row(
                   children: [
-                    Text("  DYNAMIC PRICING",style: TextStyle(color: Colors.purple.shade700,fontWeight: FontWeight.bold),),
-                    Text("   more guest,more  saving.",style: TextStyle(color: Colors.black54),)
+                    Text("  DYNAMIC PRICING", style: TextStyle(color: Colors.purple.shade700, fontWeight: FontWeight.bold)),
+                    Text("   more guest, more saving.", style: TextStyle(color: Colors.black54)),
                   ],
                 ),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
               ),
             ),
-            SizedBox(height: MediaQuery.sizeOf(context).height*0.16,),
+
+            SizedBox(height: MediaQuery.sizeOf(context).height*0.14,),
+
             Container(
               height: MediaQuery.sizeOf(context).height*0.06,
-              width: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.purple),
-              child: Center(child: Text("Order Preview",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+              width: MediaQuery.sizeOf(context).width*0.9,
+              child: TextButton(       onPressed: () {
+                // Navigate to PreviewOrderScreen and pass data
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PreviewOrderScreen(
+                      occasion: selectedDish ?? "No Occasion",  // If null, show "No Occasion"
+                      selectedDate: selectedDate,
+                      selectedTime: selectedTime,
+                      totalGuests: totalGuests,
+                      pricePerPlate: pricePerPlate,
+                      totalPrice: totalPrice,
+                      sliderValue: sliderValue,
+                    ),
+                  ),
+                );
+              }, child: Text("Order Review",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 15),),
+                style: TextButton.styleFrom(backgroundColor: Colors.purple.shade700),),
             )
           ],
         ),

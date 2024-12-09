@@ -105,9 +105,6 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
       {"name": "Tiramisu", "image": "maincourse/idli.jpg"},
     ],
   };
-
-
-
   @override
   Widget build(BuildContext context) {
     List<Map<String, String>> items = _vegNonVegValue == 0
@@ -137,7 +134,7 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
             padding: const EdgeInsets.all(0.0),
             child: SingleChildScrollView(scrollDirection: Axis.horizontal,
               child: Container(
-                height: MediaQuery.sizeOf(context).height*0.05,
+                height: MediaQuery.sizeOf(context).height*0.055,
 
                 decoration: BoxDecoration( color: Colors.white,),
                 child: Card(elevation: 2,color: Colors.white,
@@ -160,8 +157,16 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                                   padding: const EdgeInsets.only(right: 20),
                                   child: Row(
                                     children: [
+                                      const Text(
+                                        "Pure Veg  ",
+                                        style: TextStyle(
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,),
+                                      ),
                                       Switch(
                                         activeThumbImage: const AssetImage('img/vegicon.png'),
+
                                         activeColor: Colors.green,// Veg icon for selected state
                                         inactiveThumbImage: const AssetImage('img/vegicon.png'), // Veg icon for unselected state
                                         inactiveTrackColor: Colors.white, // Unselected track color
@@ -172,24 +177,21 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                                               _vegNonVegValue = 0; // Set to Veg
                                             }
                                           });
-                                        },
-                                      ),
-                                      const Text(
-                                        "  Pure Veg",
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                        },),
+                                     ],
+                                  ),),
                                 const SizedBox(width: 0), // Spacing between Veg and Non-Veg sections
                                 Padding(
                                   padding: const EdgeInsets.only(right: 20.0),
                                   child: Row(
                                     children: [
+                                      const Text(
+                                        "Non-Veg  ",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),),
                                       Switch(
                                         activeThumbImage: const AssetImage('img/nonvegicon.png'), // Non-Veg icon for selected state
                                         inactiveThumbImage: const AssetImage('img/nonvegicon.png'), // Non-Veg icon for unselected state
@@ -202,37 +204,16 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                                               _vegNonVegValue = 1; // Set to Non-Veg
                                             }
                                           });
-                                        },
-                                      ),
-                                      const Text(
-                                        "  Non-Veg",
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                                        },),
 
+                                    ],),
+                                ),],
+                            ),),
+                        ),),
                        // Spacing between Veg and Non-Veg sections
-
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-
-
-
+                    ],),
+                ),),
+            ),),
           // Main Content with Category Selector on the Left
           Expanded(
             child: Row(
@@ -249,8 +230,7 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                       _buildCategoryButton("Main"),
                       _buildCategoryButton("Sweets"),
                     ],
-                  ),
-                ),
+                  ),),
                 // Right Section: Display Items in a Scrollable Row
                 Expanded(
                   child: ListView.builder(
@@ -270,14 +250,10 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                             if (secondItemIndex < items.length)
                               _buildItemCard(items[secondItemIndex], screenWidth, screenHeight),
                           ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
+                        ),);
+                    },),
+                ),],
+            ),),
           // Bottom Section: Price and Add to Cart button
           Container(
             width: MediaQuery.sizeOf(context).width,
@@ -338,23 +314,15 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                       : Colors.purple.shade400,borderRadius: BorderRadius.circular(10)),
                   child: Center(
                     child: Text("2/2",style:TextStyle(fontWeight: FontWeight.bold,color: Colors.white) ,),
-                  ),
-                ),
-              ),
+                  ),),),
               onTap: (){
 
                 setState(() {
                   _selectedCategory = category;
                 });
-              },
-            ),
-
-          ],
-        ),
-      ),
-    );
-  }
-
+              },),
+          ],),
+      ),);}
   Widget _buildItemCard(Map<String, String> item, double screenWidth, double screenHeight) {
     return Container(
 
@@ -377,8 +345,7 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                     height: screenHeight * 0.15,
                     fit: BoxFit.cover,
                   ),
-                ),
-              ),
+                ),),
               const SizedBox(height: 10),
               Container(
                 height: screenHeight * 0.045,
@@ -389,8 +356,7 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-              ),
+                ),),
               SizedBox(height: screenHeight * 0.02),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -406,8 +372,7 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                       color: _selectedItems.contains(item["name"])
                           ? Colors.transparent  // No border when added
                           : Colors.pink,  // Pink border when not added
-                    ),
-                  ),
+                    ),),
                   child: InkWell(
                     onTap: () {
                       setState(() {
@@ -428,18 +393,7 @@ class _VegNonVegToggleState extends State<VegNonVegToggle> {
                               ? Colors.white  // White text when added
                               : Colors.pink,  // Pink text when not added
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-
-}
+                        ),),
+                    ),),),),
+            ],),
+        ),),);}}
